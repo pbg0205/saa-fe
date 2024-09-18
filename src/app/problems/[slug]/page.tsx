@@ -7,14 +7,14 @@ type Props = {
 };
 
 export default async function ProblemDetailPage({ params }: Props) {
-  const product = await getProblem(parseInt(params.slug));
+  const problem = await getProblem(parseInt(params.slug));
   return (
     <>
-      <h1>Question No.{product?.testNumber}</h1>
-      <div>Description : {product?.testPassage}</div>
+      <h1>Question No.{problem?.testNumber}</h1>
+      <div>Description : {problem?.testPassage}</div>
       <br />
       <ul>
-        {product?.choices.map((value: string, index: number) => (
+        {problem?.choices.map((value: string, index: number) => (
           <li key={index}>{value}</li>
         ))}
       </ul>
