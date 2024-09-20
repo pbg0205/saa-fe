@@ -1,5 +1,5 @@
 SUBMODULE_GITHUB=github.com/pbg0205/ssa-data
-SUBMODULE_PATH=data
+SUBMODULE_PATH=/vercel/path0/data
 USERNAME=pbg0205
 
 if [ "$GITHUB_ACCESS_TOKEN" == "" ]; then
@@ -9,15 +9,15 @@ fi
 
 mkdir data
 
+echo "current path:" + "$(pwd)"
+
 git clone https://$USERNAME:$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
-git fetch --depth=1 origin $COMMIT # fetch only the required version
-git checkout $COMMIT # checkout on the right commit
 
 cd .. # go folder up
-echo "$(pwd)"
+echo "current path:" + "$(pwd)"
 
 rm -rf ./ssa-data/.git # remove .git
-mv ./ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
+mv ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
 echo "$(ls)"
 
 # clean up
