@@ -1,5 +1,6 @@
-SUBMODULE_GITHUB=/github.com/pbg0205/ssa-data
+SUBMODULE_GITHUB=github.com/pbg0205/ssa-data
 SUBMODULE_PATH=data
+USERNAME=pbg0205@naver.com
 
 if [ "$GITHUB_ACCESS_TOKEN" == "" ]; then
   echo "Error: GITHUB_ACCESS_TOKEN is empty"
@@ -8,7 +9,7 @@ fi
 
 mkdir data
 
-git clone https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
+git clone https://$USERNAME:$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
 git fetch --depth=1 origin $COMMIT # fetch only the required version
 git checkout $COMMIT # checkout on the right commit
 
