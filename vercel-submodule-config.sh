@@ -26,8 +26,8 @@ git checkout $COMMIT # checkout on the right commit
 cd .. # go folder up
 echo "$(pwd)"
 
-rm -rf tmp_submodule/.git # remove .git
-mv tmp_submodule/* $SUBMODULE_PATH/ # move the submodule to the submodule path
+rm -rf ./tmp_submodule/.git # remove .git
+mv ./tmp_submodule/* $SUBMODULE_PATH/ # move the submodule to the submodule path
 echo "$(ls)"
 
 # clean up
