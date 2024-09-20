@@ -1,5 +1,7 @@
-SUBMODULE_GITHUB=github.com/pbg0205/ssa-data
-SUBMODULE_PATH=/vercel/path0/data
+REPOSITORY_NAME=ssa-data
+SUBMODULE_GITHUB=github.com/pbg0205/$REPOSITORY_NAME
+SUBMODULE_PATH=/vercel/path0/
+SUBMODULE_NAME=data
 USERNAME=pbg0205
 
 if [ "$GITHUB_ACCESS_TOKEN" == "" ]; then
@@ -14,8 +16,8 @@ git clone https://$USERNAME:$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin 
 cd .. # go folder up
 echo "current path:" + "$(pwd)"
 
-rm -rf ./ssa-data/.git # remove .git
-cp -r ./ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
+rm -rf $SUBMODULE_PATH/$REPOSITORY_NAME/.git # remove .git
+cp -r $SUBMODULE_PATH/$REPOSITORY_NAME/* $SUBMODULE_PATH/$SUBMODULE_NAME # move the submodule to the submodule path
 echo "$(ls)"
 
 # clean up
