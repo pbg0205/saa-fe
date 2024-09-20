@@ -7,8 +7,6 @@ if [ "$GITHUB_ACCESS_TOKEN" == "" ]; then
   exit 1
 fi
 
-mkdir data
-
 echo "current path:" + "$(pwd)"
 
 git clone https://$USERNAME:$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
@@ -17,7 +15,7 @@ cd .. # go folder up
 echo "current path:" + "$(pwd)"
 
 rm -rf ./ssa-data/.git # remove .git
-mv ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
+mv ./ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
 echo "$(ls)"
 
 # clean up
