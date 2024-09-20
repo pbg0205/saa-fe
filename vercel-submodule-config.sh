@@ -15,7 +15,7 @@ cd .. # go folder up
 echo "current path:" + "$(pwd)"
 
 rm -rf ./ssa-data/.git # remove .git
-mv ./ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
+cp -r ./ssa-data/* $SUBMODULE_PATH/ # move the submodule to the submodule path
 echo "$(ls)"
 
 # clean up
