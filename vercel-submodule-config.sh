@@ -1,6 +1,6 @@
 SUBMODULE_GITHUB=github.com/pbg0205/ssa-data
 SUBMODULE_PATH=data
-USERNAME=pbg0205@naver.com
+USERNAME=pbg0205
 
 if [ "$GITHUB_ACCESS_TOKEN" == "" ]; then
   echo "Error: GITHUB_ACCESS_TOKEN is empty"
