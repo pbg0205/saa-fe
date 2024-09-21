@@ -17,6 +17,7 @@ export default function RootLayout({
           </h1>
           <nav className={styles.nav}>
             <Link href="/problems">problems</Link>
+            <Link href="/problems/answers">answers</Link>
           </nav>
         </header>
         {children}
