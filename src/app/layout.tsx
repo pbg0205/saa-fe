@@ -1,6 +1,4 @@
-import Link from "next/link";
-import "./globals.css";
-import styles from "./layout.module.css";
+import Header from "@/components/Header";
 
 export default function RootLayout({
   children,
@@ -11,16 +9,8 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body>
-        <header className={styles.header}>
-          <h1>
-            <Link href="/">SAA-practice</Link>
-          </h1>
-          <nav className={styles.nav}>
-            <Link href="/problems">problems</Link>
-            <Link href="/problems/answers">answers</Link>
-          </nav>
-        </header>
-        {children}
+        <Header></Header>
+        <main>{children}</main>
       </body>
     </html>
   );
