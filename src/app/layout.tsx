@@ -8,8 +8,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body>
+      <body className="flex flex-col w-full max-w-screen-2xl mx-auto">
         <Header></Header>
+        <hr></hr>
         <main>{children}</main>
       </body>
     </html>
