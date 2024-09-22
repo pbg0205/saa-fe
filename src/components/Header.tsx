@@ -1,5 +1,4 @@
 import Link from "next/link";
-import styles from "../app/layout.module.css";
 import "../app/globals.css";
 
 export default function Header() {
