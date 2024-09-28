@@ -8,15 +8,20 @@ export type Problem = {
   answer: string;
 };
 
-export async function getProblems(): Promise<Problem[]> {
-  const filePath = path.join(process.cwd(), "data", "problems.json");
+export async function getAllProblems(): Promise<Problem[]> {
+  const filePath = path.join(process.cwd(), "data", "problems_ko.json");
   const data = await fs.readFile(filePath, "utf-8");
   return JSON.parse(data);
 }
 
 export async function getProblem(id: number): Promise<Problem | undefined> {
-  const products = await getProblems();
+  const products = await getAllProblems();
   return products.find((item) => {
     return item.testNumber === id;
   });
+}
+
+export async function getProblemData() {
+  const problems = await getAllProblems();
+  problems.find((problem) => problem.testNumber);
 }
