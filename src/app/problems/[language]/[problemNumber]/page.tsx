@@ -1,15 +1,20 @@
 import { getProblem } from "@/service/problems";
 
-type Props = {
+type ProblemDetailPageProps = {
   params: {
-    slug: string;
+    language: string;
+    problemNumber: string;
   };
 };
 
-export default async function ProblemDetailPage({ params }: Props) {
-  const problem = await getProblem(parseInt(params.slug));
+export default async function ProblemDetailPage({
+  params,
+}: ProblemDetailPageProps) {
+  const { language, problemNumber } = params;
+  const problem = await getProblem(parseInt(problemNumber), language);
   return (
     <>
+      <section></section>
       <h1>Question No.{problem?.testNumber}</h1>
       <div>Description : {problem?.testPassage}</div>
       <br />

@@ -8,7 +8,8 @@ export default function Header() {
         <Link href="/">SAA-practice</Link>
       </h1>
       <nav className="flex gap-4">
-        <Link href="/problems">problems</Link>
+        <Link href="/problems/ko">problems_ko</Link>
+        <Link href="/problems/en">problems_en</Link>
         <Link href="/problems/answers">answers</Link>
       </nav>
     </header>
