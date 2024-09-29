@@ -1,7 +1,8 @@
-import { getProblems, Problem } from "@/service/problems";
+import { getAllProblems, Problem } from "@/service/problems";
 
 export default async function ProblemAnswerPage() {
-  const problems = await getProblems();
+  const language = "ko";
+  const problems = await getAllProblems(language);
   return (
     <>
       <h1>문제 정답 페이지</h1>

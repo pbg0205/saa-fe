@@ -8,20 +8,22 @@ export type Problem = {
   answer: string;
 };
 
-export async function getAllProblems(): Promise<Problem[]> {
-  const filePath = path.join(process.cwd(), "data", "problems_ko.json");
+export async function getAllProblems(language: string): Promise<Problem[]> {
+  const filePath = path.join(
+    process.cwd(),
+    "data",
+    `problems_${language}.json`
+  );
   const data = await fs.readFile(filePath, "utf-8");
   return JSON.parse(data);
 }
 
-export async function getProblem(id: number): Promise<Problem | undefined> {
-  const products = await getAllProblems();
+export async function getProblem(
+  id: number,
+  language: string
+): Promise<Problem | undefined> {
+  const products = await getAllProblems(language);
   return products.find((item) => {
     return item.testNumber === id;
   });
-}
-
-export async function getProblemData() {
-  const problems = await getAllProblems();
-  problems.find((problem) => problem.testNumber);
 }
