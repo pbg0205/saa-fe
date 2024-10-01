@@ -8,6 +8,11 @@ export type Problem = {
   answer: string;
 };
 
+export type ProblemData = Problem & {
+  prev: Problem | null;
+  next: Problem | null;
+};
+
 export async function getAllProblems(language: string): Promise<Problem[]> {
   const filePath = path.join(
     process.cwd(),
@@ -18,12 +23,20 @@ export async function getAllProblems(language: string): Promise<Problem[]> {
   return JSON.parse(data);
 }
 
-export async function getProblem(
+export async function getProblemData(
   id: number,
   language: string
-): Promise<Problem | undefined> {
-  const products = await getAllProblems(language);
-  return products.find((item) => {
+): Promise<ProblemData> {
+  const problems = await getAllProblems(language);
+  const problem = problems.find((item) => {
     return item.testNumber === id;
   });
+
+  if (!problem) throw new Error(`${id} 의 문제를 찾을 수 없음`);
+
+  const index = problems.indexOf(problem);
+  const prev = index > 0 ? problems[index - 1] : null;
+  const next = index < problems.length - 1 ? problems[index + 1] : null;
+
+  return { ...problem, prev, next };
 }

@@ -1,4 +1,6 @@
-import { getProblem } from "@/service/problems";
+import ProblemMoveButton from "@/components/ProblemMoveButton";
+import { getProblemData } from "@/service/problems";
+import Link from "next/link";
 
 type ProblemDetailPageProps = {
   params: {
@@ -11,18 +13,28 @@ export default async function ProblemDetailPage({
   params,
 }: ProblemDetailPageProps) {
   const { language, problemNumber } = params;
-  const problem = await getProblem(parseInt(problemNumber), language);
+  const problemData = await getProblemData(parseInt(problemNumber), language);
+
   return (
     <>
-      <section></section>
-      <h1>Question No.{problem?.testNumber}</h1>
-      <div>Description : {problem?.testPassage}</div>
+      <h1>Question No.{problemData?.testNumber}</h1>
+      <div>Description : {problemData?.testPassage}</div>
       <br />
       <ul>
-        {problem?.choices.map((value: string, index: number) => (
+        {problemData?.choices.map((value: string, index: number) => (
           <li key={index}>{value}</li>
         ))}
       </ul>
+      <section className="flex justify-between items-center p-4">
+        <ProblemMoveButton
+          href={`/problems/${language}/${problemData.prev?.testNumber}`}
+          name="prev"
+        />
+        <ProblemMoveButton
+          href={`/problems/${language}/${problemData.next?.testNumber}`}
+          name="next"
+        />
+      </section>
     </>
   );
 }
