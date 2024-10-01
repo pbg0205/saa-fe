@@ -1,6 +1,5 @@
 import ProblemMoveButton from "@/components/ProblemMoveButton";
 import { getProblemData } from "@/service/problems";
-import Link from "next/link";
 
 type ProblemDetailPageProps = {
   params: {
