@@ -12,7 +12,7 @@ export default async function ProblemListPage({ params }: ProblemListProps) {
   const problems = await getAllProblems(language);
   return (
     <>
-      <h1>문제 목록 페이지</h1>
+      <h1>문제 목록 페이지({language})</h1>
       {problems.map((problem: Problem) => (
         <div key={problem.testNumber}>
           <Link
