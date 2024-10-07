@@ -31,7 +31,7 @@ export default async function ProblemDetailPage({
         <div>
           <ProblemPrevButton
             language={language}
-            problemNumber={problemData.next?.testNumber}
+            problemNumber={problemData.prev?.testNumber}
           ></ProblemPrevButton>
         </div>
         <div>
