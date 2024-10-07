@@ -1,4 +1,7 @@
-import ProblemMoveButton from "@/components/ProblemMoveButton";
+import {
+  ProblemNextButton,
+  ProblemPrevButton,
+} from "@/components/ProblemMoveButtons";
 import { getProblemData } from "@/service/problems";
 
 type ProblemDetailPageProps = {
@@ -25,14 +28,18 @@ export default async function ProblemDetailPage({
         ))}
       </ul>
       <section className="flex justify-between items-center p-4">
-        <ProblemMoveButton
-          href={`/problems/${language}/${problemData.prev?.testNumber}`}
-          name="prev"
-        />
-        <ProblemMoveButton
-          href={`/problems/${language}/${problemData.next?.testNumber}`}
-          name="next"
-        />
+        <div>
+          <ProblemPrevButton
+            language={language}
+            problemNumber={problemData.next?.testNumber}
+          ></ProblemPrevButton>
+        </div>
+        <div>
+          <ProblemNextButton
+            language={language}
+            problemNumber={problemData.next?.testNumber}
+          ></ProblemNextButton>
+        </div>
       </section>
     </>
   );
