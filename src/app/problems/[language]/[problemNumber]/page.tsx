@@ -136,7 +136,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
       <ProblemContent
         testNumber={testNumber}
         testPassage={testPassage}
-        localizedText={localizedText}
+        language={language}
       />
 
       <ChoiceList
