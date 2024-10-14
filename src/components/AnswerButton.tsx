@@ -3,20 +3,19 @@ import { useState } from "react";
 type AnswerButtonProps = {
   answer: string;
   language: string;
+  onToggleAnswer: () => void;
 };
 
-export default function AnswerButton({ answer, language }: AnswerButtonProps) {
-  const [showAnswer, setShowAnswer] = useState(false);
-
+export default function AnswerButton({
+  answer,
+  language,
+  onToggleAnswer,
+}: AnswerButtonProps) {
   const localizedText = (key: string) => {
     const texts: { [key: string]: { [lang: string]: string } } = {
       showAnswer: {
-        ko: "정답 보기",
-        en: "Show Answer",
-      },
-      answer: {
-        ko: "정답",
-        en: "Answer",
+        ko: "정답 확인",
+        en: "Check Answer",
       },
     };
 
@@ -24,19 +23,11 @@ export default function AnswerButton({ answer, language }: AnswerButtonProps) {
   };
 
   return (
-    <>
-      <button
-        onClick={() => setShowAnswer(!showAnswer)}
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        {localizedText("showAnswer")}
-      </button>
-
-      {showAnswer && (
-        <div className="mt-4">
-          <strong>{localizedText("answer")}:</strong> {answer}
-        </div>
-      )}
-    </>
+    <button
+      onClick={onToggleAnswer}
+      className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      {localizedText("showAnswer")}
+    </button>
   );
 }

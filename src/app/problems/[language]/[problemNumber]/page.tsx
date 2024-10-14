@@ -21,6 +21,10 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
   const { language, problemNumber } = params;
   const [problemData, setProblemData] = useState<ProblemData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [correctAnswerIndices, setCorrectAnswerIndices] = useState<number[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchProblemData = async () => {
@@ -45,6 +49,20 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     fetchProblemData();
   }, [language, problemNumber]);
 
+  useEffect(() => {
+    if (problemData && problemData.answer) {
+      const indices = problemData.answer
+        .trim()
+        .split(" ")
+        .map((ans) => {
+          const index = "ABCDEF".indexOf(ans);
+          return index !== -1 ? index : -1;
+        })
+        .filter((index) => index !== -1);
+      setCorrectAnswerIndices(indices);
+    }
+  }, [problemData]);
+
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
@@ -53,7 +71,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     return <div>문제를 찾을 수 없습니다</div>;
   }
 
-  const { testNumber, testPassage, choices, prev, next } = problemData;
+  const { testNumber, testPassage, choices, prev, next, answer } = problemData;
 
   const localizedText = (key: string) => {
     const texts: { [key: string]: { [lang: string]: string } } = {
@@ -76,6 +94,10 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     };
 
     return texts[key][language] || texts[key]["en"];
+  };
+
+  const toggleAnswer = () => {
+    setShowAnswer(!showAnswer);
   };
 
   return (
@@ -101,9 +123,17 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
         localizedText={localizedText}
       />
 
-      <ChoiceList choices={choices} />
+      <ChoiceList
+        choices={choices}
+        correctAnswerIndices={correctAnswerIndices}
+        showAnswer={showAnswer}
+      />
 
-      <AnswerButton answer={problemData.answer} language={language} />
+      <AnswerButton
+        answer={answer}
+        language={language}
+        onToggleAnswer={toggleAnswer}
+      />
     </>
   );
 }
