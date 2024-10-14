@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { getLocalizedText } from "@/utils/Localizations";
 
 type ButtonProps = {
   language: string;
@@ -13,24 +14,6 @@ const buttonBaseStyle = `
   transition-all duration-200 ease-in-out
   focus:outline-none focus:ring-2 focus:ring-offset-2
 `;
-
-const prevButtonText = (language: string) => {
-  switch (language.toLocaleLowerCase()) {
-    case "ko":
-      return "이전";
-    case "en":
-      return "Previous";
-  }
-};
-
-const nextButtonText = (language: string) => {
-  switch (language.toLocaleLowerCase()) {
-    case "ko":
-      return "다음";
-    case "en":
-      return "Next";
-  }
-};
 
 export function ProblemPrevButton({ language, problemNumber }: ButtonProps) {
   const router = useRouter();
@@ -49,7 +32,7 @@ export function ProblemPrevButton({ language, problemNumber }: ButtonProps) {
       onClick={handleClick}
     >
       <FaChevronLeft className="mr-2" />
-      {prevButtonText(language)}
+      {getLocalizedText("prevProblem", language)}
     </button>
   );
 }
@@ -70,7 +53,7 @@ export function ProblemNextButton({ language, problemNumber }: ButtonProps) {
         bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500`}
       onClick={handleClick}
     >
-      {nextButtonText(language)}
+      {getLocalizedText("nextProblem", language)}
       <FaChevronRight className="ml-2" />
     </button>
   );

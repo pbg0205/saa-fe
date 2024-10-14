@@ -1,22 +1,25 @@
+import { getLocalizedText } from "@/utils/Localizations";
+
 type ProblemContentProps = {
   testNumber: number;
   testPassage: string;
-  localizedText: (key: string) => string;
+  language: string;
 };
 
 export function ProblemContent({
   testNumber,
   testPassage,
-  localizedText,
+  language,
 }: ProblemContentProps) {
   return (
     <div className="mb-6">
-      <h1 className="text-2xl font-bold mb-2">
-        {localizedText("problemNumber")}: {testNumber}
-      </h1>
-      <p className="text-m">
-        {localizedText("description")}: {testPassage}
+      <h2 className="text-xl font-bold mb-2">
+        {getLocalizedText("problemNumber", language)} {testNumber}
+      </h2>
+      <p className="mb-2">
+        <strong>{getLocalizedText("description", language)}:</strong>
       </p>
+      <p>{testPassage}</p>
     </div>
   );
 }
