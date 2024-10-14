@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type AnswerButtonProps = {
   answer: string;
   language: string;
@@ -7,7 +5,6 @@ type AnswerButtonProps = {
 };
 
 export default function AnswerButton({
-  answer,
   language,
   onToggleAnswer,
 }: AnswerButtonProps) {
