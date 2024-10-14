@@ -25,6 +25,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
   const [correctAnswerIndices, setCorrectAnswerIndices] = useState<number[]>(
     []
   );
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   useEffect(() => {
     const fetchProblemData = async () => {
@@ -91,13 +92,28 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
         ko: "정답",
         en: "Answer",
       },
+      correct: {
+        ko: "정답입니다!",
+        en: "Correct!",
+      },
+      incorrect: {
+        ko: "정답이 아닙니다!",
+        en: "Incorrect!",
+      },
     };
 
     return texts[key][language] || texts[key]["en"];
   };
 
+  const handleCheckAnswer = (correct: boolean) => {
+    setIsCorrect(correct);
+  };
+
   const toggleAnswer = () => {
     setShowAnswer(!showAnswer);
+    if (!showAnswer) {
+      setIsCorrect(null);
+    }
   };
 
   return (
@@ -127,6 +143,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
         choices={choices}
         correctAnswerIndices={correctAnswerIndices}
         showAnswer={showAnswer}
+        onCheckAnswer={handleCheckAnswer}
       />
 
       <AnswerButton
@@ -134,6 +151,16 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
         language={language}
         onToggleAnswer={toggleAnswer}
       />
+
+      {showAnswer && isCorrect !== null && (
+        <p
+          className={`mt-4 font-bold ${
+            isCorrect ? "text-blue-500" : "text-red-500"
+          }`}
+        >
+          {isCorrect ? localizedText("correct") : localizedText("incorrect")}
+        </p>
+      )}
     </>
   );
 }
