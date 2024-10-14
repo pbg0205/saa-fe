@@ -26,11 +26,11 @@ const localizationTexts: LocalizationTexts = {
   },
   nextProblem: {
     ko: "다음 문제",
-    en: "Next Problem",
+    en: "Next",
   },
   prevProblem: {
     ko: "이전 문제",
-    en: "Previous Problem",
+    en: "Previous",
   },
   problemNumber: {
     ko: "문제 번호",
