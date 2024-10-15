@@ -7,9 +7,7 @@ type LocalizationKey =
   | "description"
   | "answer"
   | "correct"
-  | "incorrect"
-  | "otherKey1"
-  | "otherKey2";
+  | "incorrect";
 
 const localizationTexts: {
   [key in LocalizationKey]: { [lang: string]: string };
