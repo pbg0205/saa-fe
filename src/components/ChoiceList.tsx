@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 type ChoiceListProps = {
   choices: string[];
-  correctAnswerIndices: number[] | undefined;
+  correctAnswerIndices: number[];
   showAnswer: boolean;
   onCheckAnswer: (isCorrect: boolean) => void;
 };
@@ -14,37 +14,29 @@ export function ChoiceList({
   onCheckAnswer,
 }: ChoiceListProps) {
   const [selectedChoices, setSelectedChoices] = useState<number[]>([]);
-  const [answerChecked, setAnswerChecked] = useState(false);
 
   useEffect(() => {
-    if (showAnswer && !answerChecked) {
-      const isCorrect = arraysEqual(
-        selectedChoices.sort(),
-        correctAnswerIndices.sort()
-      );
-      onCheckAnswer(isCorrect);
-      setAnswerChecked(true);
+    if (!showAnswer) {
+      return;
     }
-  }, [
-    showAnswer,
-    selectedChoices,
-    correctAnswerIndices,
-    answerChecked,
-    onCheckAnswer,
-  ]);
+
+    onCheckAnswer(
+      arraysEqual(selectedChoices.sort(), correctAnswerIndices.sort())
+    );
+  }, [showAnswer, selectedChoices, correctAnswerIndices, onCheckAnswer]);
 
   const toggleChoice = (index: number) => {
-    if (!showAnswer) {
-      setSelectedChoices((prev) =>
-        prev.includes(index)
-          ? prev.filter((i) => i !== index)
-          : [...prev, index]
-      );
-      setAnswerChecked(false);
+    if (showAnswer) {
+      return;
     }
+    setSelectedChoices((prev: number[]): number[] => {
+      return prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index];
+    });
   };
 
-  const isCorrect = (index: number) => {
+  const isChoiceEqualsAnswer = (index: number) => {
     return showAnswer && correctAnswerIndices.includes(index);
   };
 
@@ -63,7 +55,8 @@ export function ChoiceList({
           key={index}
           className={`mb-2 cursor-pointer ${
             selectedChoices.includes(index) ? "font-bold" : ""
-          } ${isCorrect(index) ? "border-2 border-sky-500" : ""}`}
+          } 
+          ${isChoiceEqualsAnswer(index) ? "border-2 border-sky-500" : ""}`}
           onClick={() => toggleChoice(index)}
         >
           {choice}

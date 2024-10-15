@@ -7,7 +7,9 @@ type LocalizationKey =
   | "description"
   | "answer"
   | "correct"
-  | "incorrect";
+  | "incorrect"
+  | "otherKey1"
+  | "otherKey2";
 
 const localizationTexts: {
   [key in LocalizationKey]: { [lang: string]: string };
@@ -54,12 +56,7 @@ export function getLocalizedText(
   key: LocalizationKey,
   language: string
 ): string {
-  if (localizationTexts[key] && localizationTexts[key][language]) {
-    return localizationTexts[key][language];
-  }
-
-  // 요청된 언어가 없을 경우 영어를 기본값으로 사용
-  return localizationTexts[key]["en"] || key;
+  return localizationTexts[key][language] || localizationTexts[key]["en"];
 }
 
 export function getSupportedLanguages(): string[] {

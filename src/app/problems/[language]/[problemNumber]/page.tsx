@@ -10,6 +10,7 @@ import { ProblemContent } from "@/components/ProblemContent";
 import { ChoiceList } from "@/components/ChoiceList";
 import { ProblemData } from "@/service/problems";
 import { getLocalizedText } from "@/utils/Localizations";
+import { answerIndices } from "@/service/answer";
 
 type ProblemDetailPageProps = {
   params: {
@@ -26,7 +27,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
   const [correctAnswerIndices, setCorrectAnswerIndices] = useState<number[]>(
     []
   );
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProblemData = async () => {
@@ -52,17 +53,11 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
   }, [language, problemNumber]);
 
   useEffect(() => {
-    if (problemData && problemData.answer) {
-      const indices = problemData.answer
-        .trim()
-        .split(" ")
-        .map((ans) => {
-          const index = "ABCDEF".indexOf(ans);
-          return index !== -1 ? index : -1;
-        })
-        .filter((index) => index !== -1);
-      setCorrectAnswerIndices(indices);
+    if (problemData === null || problemData.answer === null) {
+      return;
     }
+
+    setCorrectAnswerIndices(answerIndices(problemData.answer));
   }, [problemData]);
 
   if (isLoading) {
@@ -75,15 +70,12 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
 
   const { testNumber, testPassage, choices, prev, next, answer } = problemData;
 
-  const handleCheckAnswer = (correct: boolean) => {
+  const handleCheckAnswer = (correct: boolean): void => {
     setIsCorrect(correct);
   };
 
   const toggleAnswer = () => {
     setShowAnswer(!showAnswer);
-    if (!showAnswer) {
-      setIsCorrect(null);
-    }
   };
 
   return (
@@ -122,7 +114,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
         onToggleAnswer={toggleAnswer}
       />
 
-      {showAnswer && isCorrect !== null && (
+      {showAnswer && (
         <p
           className={`mt-4 font-bold ${
             isCorrect ? "text-blue-500" : "text-red-500"
