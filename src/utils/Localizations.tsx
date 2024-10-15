@@ -9,13 +9,9 @@ type LocalizationKey =
   | "correct"
   | "incorrect";
 
-type LocalizationTexts = {
-  [key in LocalizationKey]: {
-    [lang: string]: string;
-  };
-};
-
-const localizationTexts: LocalizationTexts = {
+const localizationTexts: {
+  [key in LocalizationKey]: { [lang: string]: string };
+} = {
   showAnswer: {
     ko: "정답 확인",
     en: "Check Answer",

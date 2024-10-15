@@ -9,6 +9,7 @@ import AnswerButton from "@/components/AnswerButton";
 import { ProblemContent } from "@/components/ProblemContent";
 import { ChoiceList } from "@/components/ChoiceList";
 import { ProblemData } from "@/service/problems";
+import { getLocalizedText } from "@/utils/Localizations";
 
 type ProblemDetailPageProps = {
   params: {
@@ -74,37 +75,6 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
 
   const { testNumber, testPassage, choices, prev, next, answer } = problemData;
 
-  const localizedText = (key: string) => {
-    const texts: { [key: string]: { [lang: string]: string } } = {
-      problemNumber: {
-        ko: "문제 번호",
-        en: "Question No",
-      },
-      description: {
-        ko: "설명",
-        en: "Description",
-      },
-      showAnswer: {
-        ko: "정답 보기",
-        en: "Show Answer",
-      },
-      answer: {
-        ko: "정답",
-        en: "Answer",
-      },
-      correct: {
-        ko: "정답입니다!",
-        en: "Correct!",
-      },
-      incorrect: {
-        ko: "정답이 아닙니다!",
-        en: "Incorrect!",
-      },
-    };
-
-    return texts[key][language] || texts[key]["en"];
-  };
-
   const handleCheckAnswer = (correct: boolean) => {
     setIsCorrect(correct);
   };
@@ -158,7 +128,9 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
             isCorrect ? "text-blue-500" : "text-red-500"
           }`}
         >
-          {isCorrect ? localizedText("correct") : localizedText("incorrect")}
+          {isCorrect
+            ? getLocalizedText("correct", language)
+            : getLocalizedText("incorrect", language)}
         </p>
       )}
     </>
