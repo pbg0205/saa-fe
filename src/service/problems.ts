@@ -13,6 +13,8 @@ export type ProblemData = Problem & {
   next: Problem | null;
 };
 
+export type RandomProblem = Problem;
+
 export async function getAllProblems(language: string): Promise<Problem[]> {
   const filePath = path.join(
     process.cwd(),
