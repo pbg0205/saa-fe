@@ -14,16 +14,7 @@ export type RandomProblem = {
   answer: string;
 };
 
-type RandomProblemDetailPageProps = {
-  params: {
-    problemNumber: string;
-  };
-};
-
-export default function ProblemDetailPage({
-  params,
-}: RandomProblemDetailPageProps) {
-  const problemNumber = params;
+export default function ProblemDetailPage() {
   const language = "ko";
 
   const [randomProblem, setRandomProblem] = useState<RandomProblem | null>(
