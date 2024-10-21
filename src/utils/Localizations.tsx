@@ -7,7 +7,8 @@ type LocalizationKey =
   | "description"
   | "answer"
   | "correct"
-  | "incorrect";
+  | "incorrect"
+  | "nextRandomProblem";
 
 const localizationTexts: {
   [key in LocalizationKey]: { [lang: string]: string };
@@ -47,6 +48,10 @@ const localizationTexts: {
   incorrect: {
     ko: "정답이 아닙니다!",
     en: "Incorrect!",
+  },
+  nextRandomProblem: {
+    ko: "다음 랜덤 문제",
+    en: "Next Random Problem",
   },
 };
 
