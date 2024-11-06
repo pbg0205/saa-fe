@@ -12,7 +12,7 @@ type ExamProblemNextProps = {
 const buttonBaseStyle = `
   flex items-center justify-center px-4 py-2 rounded-md
   transition-all duration-200 ease-in-out
-  focus:outline-none focus:ring-2 focus:ring-offset-2
+  focus:outline-none
 `;
 
 export default function ExamProblemNextButton({
