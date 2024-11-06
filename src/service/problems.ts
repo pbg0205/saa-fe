@@ -1,5 +1,5 @@
 import path from "path";
-import { promises as fs } from "fs";
+import {promises as fs} from "fs";
 
 export type Problem = {
   testNumber: number;
@@ -39,4 +39,16 @@ export async function getProblemData(
   const next = index < problems.length - 1 ? problems[index + 1] : null;
 
   return { ...problem, prev, next };
+}
+
+export async function getRandomProblems(language: string, count: number): Promise<Problem[]> {
+  const jsonData = await getAllProblems(language);
+
+  const randomSet = new Set<number>;
+  while(randomSet.size < count) {
+    const randomIndex = Math.floor(Math.random() * jsonData.length);
+    randomSet.add(randomIndex);
+  }
+
+  return Array.from(randomSet).map((index) => jsonData[index]);
 }
