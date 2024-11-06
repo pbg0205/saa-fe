@@ -5,6 +5,8 @@ type ChoiceListProps = {
   correctAnswerIndices: number[];
   showAnswer: boolean;
   onCheckAnswer: (isCorrect: boolean) => void;
+  selectedChoices?: number[];
+  onAnswerSelect: (choices: number[]) => void;
 };
 
 export function ChoiceList({
@@ -12,9 +14,9 @@ export function ChoiceList({
   correctAnswerIndices = [],
   showAnswer,
   onCheckAnswer,
+  selectedChoices = [],
+  onAnswerSelect,
 }: ChoiceListProps) {
-  const [selectedChoices, setSelectedChoices] = useState<number[]>([]);
-
   useEffect(() => {
     if (!showAnswer) {
       return;
@@ -29,11 +31,11 @@ export function ChoiceList({
     if (showAnswer) {
       return;
     }
-    setSelectedChoices((prev: number[]): number[] => {
-      return prev.includes(index)
-        ? prev.filter((i) => i !== index)
-        : [...prev, index];
-    });
+    const newSelectedChoices = selectedChoices.includes(index)
+      ? selectedChoices.filter((i) => i !== index)
+      : [...selectedChoices, index];
+    
+    onAnswerSelect(newSelectedChoices);
   };
 
   const isChoiceEqualsAnswer = (index: number) => {
