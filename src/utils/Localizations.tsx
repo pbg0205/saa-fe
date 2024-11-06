@@ -22,11 +22,11 @@ const localizationTexts: {
     en: "Check Your Answer",
   },
   nextProblem: {
-    ko: "다음 문제",
+    ko: "다음",
     en: "Next",
   },
   prevProblem: {
-    ko: "이전 문제",
+    ko: "이전",
     en: "Previous",
   },
   problemNumber: {
@@ -50,7 +50,7 @@ const localizationTexts: {
     en: "Incorrect!",
   },
   nextRandomProblem: {
-    ko: "다음 랜덤 문제",
+    ko: "다음 랜덤",
     en: "Next Random Problem",
   },
 };
