@@ -20,12 +20,11 @@ export default function ProblemDetailPage() {
   const [randomProblem, setRandomProblem] = useState<RandomProblem | null>(
     null
   );
+  const [answersIndex, setAnswersIndex] = useState<number[]>([]);
+  const [choicesIndex, setSelectedChoicesIndex] = useState<number[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [correctAnswerIndices, setCorrectAnswerIndices] = useState<number[]>(
-    []
-  );
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
   const fetchProblemData = useCallback(async () => {
     setIsLoading(true);
@@ -39,7 +38,6 @@ export default function ProblemDetailPage() {
       if (response.ok) {
         setRandomProblem(data);
         setShowAnswer(false);
-        setIsCorrect(false);
       } else {
         console.error("데이터 가져오기 오류:", data.error);
       }
@@ -59,7 +57,8 @@ export default function ProblemDetailPage() {
       return;
     }
 
-    setCorrectAnswerIndices(answerIndices(randomProblem.answer));
+    setAnswersIndex(answerIndices(randomProblem.answer));
+    setSelectedChoicesIndex([]);
   }, [randomProblem]);
 
   if (isLoading) {
@@ -71,9 +70,6 @@ export default function ProblemDetailPage() {
   }
 
   const { testNumber, testPassage, choices, answer } = randomProblem;
-  const handleCheckAnswer = (correct: boolean): void => {
-    setIsCorrect(correct);
-  };
 
   const toggleAnswer = () => {
     setShowAnswer(!showAnswer);
@@ -81,6 +77,10 @@ export default function ProblemDetailPage() {
 
   const handleNextRandomProblem = () => {
     fetchProblemData();
+  };
+
+  const handleAnswerSelect = (choicesIndex: number[]) => {
+    setSelectedChoicesIndex(choicesIndex);
   };
 
   return (
@@ -101,10 +101,10 @@ export default function ProblemDetailPage() {
 
       <ChoiceList
         choices={choices}
-        answersIndex={correctAnswerIndices}
+        selectedChoicesIndex={choicesIndex}
+        answersIndex={answersIndex}
         showAnswer={showAnswer}
-        onAnswerSelect={() => {}}
-        onCheckAnswer={handleCheckAnswer}
+        onAnswerSelect={handleAnswerSelect}
       />
 
       <AnswerButton
@@ -116,10 +116,12 @@ export default function ProblemDetailPage() {
       {showAnswer && (
         <p
           className={`mt-4 font-bold ${
-            isCorrect ? "text-blue-500" : "text-red-500"
+            selectedChoiceCorrect(choicesIndex, answersIndex)
+              ? "text-blue-500"
+              : "text-red-500"
           }`}
         >
-          {isCorrect
+          {selectedChoiceCorrect(choicesIndex, answersIndex)
             ? getLocalizedText("correct", language)
             : getLocalizedText("incorrect", language)}
         </p>
@@ -127,3 +129,18 @@ export default function ProblemDetailPage() {
     </>
   );
 }
+
+const selectedChoiceCorrect = (
+  selectedChoiceIndex: number[],
+  correctAnswerIndex: number[]
+) => {
+  if (selectedChoiceIndex.length !== correctAnswerIndex.length) {
+    return false;
+  }
+
+  for (let i = 0; i < selectedChoiceIndex.length; i++) {
+    if (selectedChoiceIndex[i] !== correctAnswerIndex[i]) return false;
+  }
+
+  return true;
+};
