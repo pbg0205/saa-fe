@@ -103,6 +103,7 @@ export default function ProblemDetailPage() {
         choices={choices}
         correctAnswerIndices={correctAnswerIndices}
         showAnswer={showAnswer}
+        onAnswerSelect={() => {}}
         onCheckAnswer={handleCheckAnswer}
       />
 

@@ -28,6 +28,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     []
   );
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  const [selectedChoices, setSelectedChoices] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchProblemData = async () => {
@@ -78,6 +79,10 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     setShowAnswer(!showAnswer);
   };
 
+  const handleAnswerSelect = (choices: number[]) => {
+    setSelectedChoices(choices);
+  };
+
   return (
     <>
       <section className="flex justify-between items-center p-4 w-full">
@@ -105,6 +110,8 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
         choices={choices}
         correctAnswerIndices={correctAnswerIndices}
         showAnswer={showAnswer}
+        onAnswerSelect={handleAnswerSelect}
+        selectedChoices={selectedChoices}
         onCheckAnswer={handleCheckAnswer}
       />
 

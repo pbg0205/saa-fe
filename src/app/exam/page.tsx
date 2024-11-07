@@ -49,7 +49,7 @@ export default function ExamPage() {
   console.log(randomProblems);
   console.log(problemData);
 
-  const nextProblem = () => {
+  const onClickNextProblem = () => {
     console.log("다음 버튼 클릭: " + randomProblems[currentProblemIdx]);
     setCurrentProblemIdx((prevIdx) => {
       const newIdx = prevIdx + 1;
@@ -58,7 +58,7 @@ export default function ExamPage() {
     });
   };
 
-  const prevProblem = () => {
+  const onClickPrevProblem = () => {
     console.log("이전 버튼 클릭: " + randomProblems[currentProblemIdx]);
     setCurrentProblemIdx(Math.max(currentProblemIdx - 1, 0));
     setProblemData(randomProblems[currentProblemIdx]);
@@ -110,12 +110,12 @@ export default function ExamPage() {
         <div className="flex gap-4">
           <ExamProblemPrevButton
             language="ko"
-            onPrevProblem={prevProblem}
+            onPrevProblem={onClickPrevProblem}
             disablePrevButton={disablePrevButton}
           ></ExamProblemPrevButton>
           <ExamProblemNextButton
             language="ko"
-            onNextProblem={nextProblem}
+            onNextProblem={onClickNextProblem}
             disableNextButton={disableNextButton}
           ></ExamProblemNextButton>
         </div>
