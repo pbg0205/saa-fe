@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Problem } from "@/service/problems";
 import { ChoiceList } from "@/components/ChoiceList";
 import ExamSubmitButton from "@/components/ExamSubmitButton";
+import ResultModal from "@/components/ResultModal";
 
 export default function ExamPage() {
   const [currentProblemIdx, setCurrentProblemIdx] = useState<number>(0);
@@ -16,6 +17,8 @@ export default function ExamPage() {
   const [selectedAnswers, setSelectedAnswers] = useState<{
     [key: number]: number[];
   }>({});
+  const [showModal, setShowModal] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const initializeProblems = async () => {
@@ -74,6 +77,30 @@ export default function ExamPage() {
     }));
   };
 
+  const calculateScore = () => {
+    let totalScore = 0;
+    randomProblems.forEach((problem, index) => {
+      const userAnswers = selectedAnswers[index] || [];
+      const correctAnswers = problem.answer
+        .trim()
+        .split(", ")
+        .map((ans) => ans.charCodeAt(0) - "A".charCodeAt(0));
+
+      if (
+        JSON.stringify(userAnswers.sort()) ===
+        JSON.stringify(correctAnswers.sort())
+      ) {
+        totalScore += 1;
+      }
+    });
+    setScore(totalScore);
+  };
+
+  const handleSubmit = () => {
+    calculateScore();
+    setShowModal(true);
+  };
+
   return (
     <>
       <section className="flex justify-between items-center p-4 w-full">
@@ -114,10 +141,16 @@ export default function ExamPage() {
           }
         />
         <div className="flex justify-end mt-4">
-          <ExamSubmitButton
-            onSubmit={() => console.log("제출하기 버튼 클릭")}
-          />
+          <ExamSubmitButton onSubmit={handleSubmit} />
         </div>
+
+        {showModal && (
+          <ResultModal
+            score={score}
+            total={randomProblems.length}
+            onClose={() => setShowModal(false)}
+          />
+        )}
       </div>
     </>
   );
