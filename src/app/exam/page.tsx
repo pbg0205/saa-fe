@@ -6,6 +6,7 @@ import ExamProblemNextButton from "@/components/ExamProblemNextButton";
 import { useEffect, useState } from "react";
 import { Problem } from "@/service/problems";
 import { ChoiceList } from "@/components/ChoiceList";
+import ExamSubmitButton from "@/components/ExamSubmitButton";
 
 export default function ExamPage() {
   const [currentProblemIdx, setCurrentProblemIdx] = useState<number>(0);
@@ -35,6 +36,7 @@ export default function ExamPage() {
 
   useEffect(() => {
     setProblemData(randomProblems[currentProblemIdx]);
+    console.log("selectedAnswers: ", selectedAnswers);
   }, [currentProblemIdx]);
 
   if (isLoading) {
@@ -111,6 +113,11 @@ export default function ExamPage() {
             handleAnswerSelect(currentProblemIdx, choices)
           }
         />
+        <div className="flex justify-end mt-4">
+          <ExamSubmitButton
+            onSubmit={() => console.log("제출하기 버튼 클릭")}
+          />
+        </div>
       </div>
     </>
   );
