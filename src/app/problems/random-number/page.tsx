@@ -101,7 +101,7 @@ export default function ProblemDetailPage() {
 
       <ChoiceList
         choices={choices}
-        correctAnswerIndices={correctAnswerIndices}
+        answersIndex={correctAnswerIndices}
         showAnswer={showAnswer}
         onAnswerSelect={() => {}}
         onCheckAnswer={handleCheckAnswer}
