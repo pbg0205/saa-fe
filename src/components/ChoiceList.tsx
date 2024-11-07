@@ -34,7 +34,7 @@ export function ChoiceList({
     const newSelectedChoices = selectedChoices.includes(index)
       ? selectedChoices.filter((i) => i !== index)
       : [...selectedChoices, index];
-    
+
     onAnswerSelect(newSelectedChoices);
   };
 
