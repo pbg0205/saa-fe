@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type ChoiceListProps = {
   choices: string[];
   answersIndex: number[];

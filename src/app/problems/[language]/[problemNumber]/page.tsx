@@ -68,10 +68,6 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
 
   const { testNumber, testPassage, choices, prev, next, answer } = problemData;
 
-  const handleCheckAnswer = (correct: boolean): void => {
-    setIsCorrect(correct);
-  };
-
   const toggleAnswer = () => {
     setShowAnswer(!showAnswer);
   };
