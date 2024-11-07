@@ -25,7 +25,6 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
   const [answersIndex, setCorrectAnswerIndices] = useState<number[]>([]);
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [choicesIndex, setSelectedChoicesIndex] = useState<number[]>([]);
 
   useEffect(() => {
@@ -107,10 +106,9 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
       <ChoiceList
         choices={choices}
         answersIndex={answersIndex}
+        selectedChoicesIndex={choicesIndex}
         showAnswer={showAnswer}
         onAnswerSelect={handleAnswerSelect}
-        selectedChoicesIndex={choicesIndex}
-        onCheckAnswer={handleCheckAnswer}
       />
 
       <AnswerButton

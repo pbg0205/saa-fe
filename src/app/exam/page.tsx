@@ -132,9 +132,15 @@ export default function ExamPage() {
 
         <ChoiceList
           choices={problemData?.choices || []}
-          answersIndex={problemData?.correctAnswerIndices || []}
+          answersIndex={
+            problemData?.answer
+              ? problemData.answer
+                  .trim()
+                  .split(", ")
+                  .map((ans) => ans.charCodeAt(0) - "A".charCodeAt(0))
+              : []
+          }
           showAnswer={false}
-          onCheckAnswer={(isCorrect) => console.log("정답 체크:", isCorrect)}
           selectedChoicesIndex={selectedAnswers[currentProblemIdx] || []}
           onAnswerSelect={(choices) =>
             handleAnswerSelect(currentProblemIdx, choices)
