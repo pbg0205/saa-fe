@@ -1,19 +1,35 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ResultModalProps {
-  score: number;
-  total: number;
+  correctAnswers: { [key: number]: number[] };
+  selectedAnswers: { [key: number]: number[] };
   onClose: () => void;
 }
 
-const ResultModal: React.FC<ResultModalProps> = ({ score, total, onClose }) => {
+const ResultModal: React.FC<ResultModalProps> = ({
+  correctAnswers,
+  selectedAnswers,
+  onClose,
+}) => {
+  //router
   const router = useRouter();
-
   const handleGoToMain = () => {
     router.push("/"); // 메인 페이지 경로로 이동
   };
+
+  //useState
+  const [score, setScore] = useState(0);
+  const total = Object.keys(correctAnswers).length;
+
+  //useEffect
+  useEffect(() => {
+    setScore(countCorrectAnswers(correctAnswers, selectedAnswers));
+    console.log("correctAnswers: ", correctAnswers);
+    console.log("selectedAnswers: ", selectedAnswers);
+  }, [correctAnswers, selectedAnswers]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -42,3 +58,38 @@ const ResultModal: React.FC<ResultModalProps> = ({ score, total, onClose }) => {
 };
 
 export default ResultModal;
+
+const countCorrectAnswers = (
+  correctAnswers: { [key: number]: number[] },
+  selectedAnswers: { [key: number]: number[] }
+) => {
+  let correctCount = 0;
+
+  Object.keys(correctAnswers).forEach((keyStr) => {
+    const key = Number(keyStr);
+
+    // selectedAnswers에 해당 키가 없는 경우 처리
+    if (!selectedAnswers[key] || !Array.isArray(selectedAnswers[key])) {
+      return;
+    }
+
+    // 배열 길이가 다르면 틀린 답
+    if (correctAnswers[key].length !== selectedAnswers[key].length) {
+      return;
+    }
+
+    // 정렬 후 배열 비교
+    const sortedCorrect = [...correctAnswers[key]].sort((a, b) => a - b);
+    const sortedSelected = [...selectedAnswers[key]].sort((a, b) => a - b);
+
+    const isCorrect = sortedCorrect.every(
+      (value, index) => value === sortedSelected[index]
+    );
+
+    if (isCorrect) {
+      correctCount += 1;
+    }
+  });
+
+  return correctCount;
+};

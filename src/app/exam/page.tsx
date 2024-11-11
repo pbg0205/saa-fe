@@ -17,8 +17,10 @@ export default function ExamPage() {
   const [selectedAnswers, setSelectedAnswers] = useState<{
     [key: number]: number[];
   }>({});
+  const [correctAnswers, setCorrectAnswers] = useState<{
+    [key: number]: number[];
+  }>({});
   const [showModal, setShowModal] = useState(false);
-  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const initializeProblems = async () => {
@@ -27,19 +29,22 @@ export default function ExamPage() {
         const problems = await fetchRandomProblems();
         setRandomProblems(problems);
         setProblemData(problems[currentProblemIdx]);
+
+        const answers = getCorrectAnswers(problems);
+        console.log("정답 설정:", answers);
+        setCorrectAnswers(answers);
       } catch (error) {
         console.error("random api call 예외 발생:", error);
       } finally {
         setIsLoading(false);
       }
     };
-
     initializeProblems();
   }, []);
 
   useEffect(() => {
     setProblemData(randomProblems[currentProblemIdx]);
-    console.log("selectedAnswers: ", selectedAnswers);
+    console.log("change problem selectedAnswers: ", selectedAnswers);
   }, [currentProblemIdx]);
 
   if (isLoading) {
@@ -77,27 +82,7 @@ export default function ExamPage() {
     }));
   };
 
-  const calculateScore = () => {
-    let totalScore = 0;
-    randomProblems.forEach((problem, index) => {
-      const userAnswers = selectedAnswers[index] || [];
-      const correctAnswers = problem.answer
-        .trim()
-        .split(", ")
-        .map((ans) => ans.charCodeAt(0) - "A".charCodeAt(0));
-
-      if (
-        JSON.stringify(userAnswers.sort()) ===
-        JSON.stringify(correctAnswers.sort())
-      ) {
-        totalScore += 1;
-      }
-    });
-    setScore(totalScore);
-  };
-
   const handleSubmit = () => {
-    calculateScore();
     setShowModal(true);
   };
 
@@ -152,8 +137,8 @@ export default function ExamPage() {
 
         {showModal && (
           <ResultModal
-            score={score}
-            total={randomProblems.length}
+            correctAnswers={correctAnswers}
+            selectedAnswers={selectedAnswers}
             onClose={() => setShowModal(false)}
           />
         )}
@@ -177,4 +162,14 @@ async function fetchRandomProblems(): Promise<Problem[]> {
     console.error("데이터 가져오기 중 예외 발생:", error);
     throw error;
   }
+}
+
+function getCorrectAnswers(problems: Problem[]): { [key: number]: number[] } {
+  return problems.reduce((acc, problem, index) => {
+    acc[index] = problem.answer
+      .trim()
+      .split(", ")
+      .map((ans) => ans.charCodeAt(0) - "A".charCodeAt(0));
+    return acc;
+  }, {} as { [key: number]: number[] });
 }
