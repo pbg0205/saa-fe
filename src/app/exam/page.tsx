@@ -90,7 +90,7 @@ export default function ExamPage() {
     <>
       <section className="flex justify-between items-center p-4 w-full">
         <div className="flex-1">
-          <Timer timeInSeconds={600}></Timer>
+          <Timer timeInSeconds={600} onTimeEnd={() => setShowModal(true)} />
         </div>
         <div className="flex gap-4">
           <ExamProblemPrevButton
