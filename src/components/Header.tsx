@@ -12,6 +12,7 @@ export default function Header() {
         <Link href="/problems/en">EN</Link>
         <Link href="/problems/answers">answers</Link>
         <Link href="/problems/random-number">random</Link>
+        <Link href="/exam">exam</Link>
       </nav>
     </header>
   );
