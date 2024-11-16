@@ -6,13 +6,11 @@ import { useEffect, useState } from "react";
 interface ResultModalProps {
   correctAnswers: { [key: number]: number[] };
   selectedAnswers: { [key: number]: number[] };
-  onClose: () => void;
 }
 
 const ResultModal: React.FC<ResultModalProps> = ({
   correctAnswers,
   selectedAnswers,
-  onClose,
 }) => {
   //router
   const router = useRouter();
@@ -50,7 +48,6 @@ const ResultModal: React.FC<ResultModalProps> = ({
             const questionNum = Number(keyStr);
             const correct = correctAnswers[questionNum];
             const selected = selectedAnswers[questionNum] || [];
-
             const isCorrect = checkAnswerCorrect(correct, selected);
 
             return (
@@ -86,12 +83,6 @@ const ResultModal: React.FC<ResultModalProps> = ({
             className="bg-green-500 text-white px-4 py-2 rounded"
           >
             메인 페이지로 이동
-          </button>
-          <button
-            onClick={onClose}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            닫기
           </button>
         </div>
       </div>
