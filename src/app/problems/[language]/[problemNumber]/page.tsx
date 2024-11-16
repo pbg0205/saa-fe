@@ -24,10 +24,8 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
   const [problemData, setProblemData] = useState<ProblemData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [correctAnswerIndices, setCorrectAnswerIndices] = useState<number[]>(
-    []
-  );
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  const [answersIndex, setCorrectAnswerIndices] = useState<number[]>([]);
+  const [choicesIndex, setSelectedChoicesIndex] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchProblemData = async () => {
@@ -70,12 +68,12 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
 
   const { testNumber, testPassage, choices, prev, next, answer } = problemData;
 
-  const handleCheckAnswer = (correct: boolean): void => {
-    setIsCorrect(correct);
-  };
-
   const toggleAnswer = () => {
     setShowAnswer(!showAnswer);
+  };
+
+  const handleAnswerSelect = (choicesIndex: number[]) => {
+    setSelectedChoicesIndex(choicesIndex);
   };
 
   return (
@@ -103,9 +101,10 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
 
       <ChoiceList
         choices={choices}
-        correctAnswerIndices={correctAnswerIndices}
+        answersIndex={answersIndex}
+        selectedChoicesIndex={choicesIndex}
         showAnswer={showAnswer}
-        onCheckAnswer={handleCheckAnswer}
+        onAnswerSelect={handleAnswerSelect}
       />
 
       <AnswerButton
@@ -117,10 +116,12 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
       {showAnswer && (
         <p
           className={`mt-4 font-bold ${
-            isCorrect ? "text-blue-500" : "text-red-500"
+            selectedChoiceCorrect(choicesIndex, answersIndex)
+              ? "text-blue-500"
+              : "text-red-500"
           }`}
         >
-          {isCorrect
+          {selectedChoiceCorrect(choicesIndex, answersIndex)
             ? getLocalizedText("correct", language)
             : getLocalizedText("incorrect", language)}
         </p>
@@ -128,3 +129,18 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     </>
   );
 }
+
+const selectedChoiceCorrect = (
+  selectedChoiceIndex: number[],
+  correctAnswerIndex: number[]
+) => {
+  if (selectedChoiceIndex.length !== correctAnswerIndex.length) {
+    return false;
+  }
+
+  for (let i = 0; i < selectedChoiceIndex.length; i++) {
+    if (selectedChoiceIndex[i] !== correctAnswerIndex[i]) return false;
+  }
+
+  return true;
+};

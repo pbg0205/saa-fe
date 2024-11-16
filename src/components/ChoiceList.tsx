@@ -1,51 +1,32 @@
-import { useState, useEffect } from "react";
-
 type ChoiceListProps = {
   choices: string[];
-  correctAnswerIndices: number[];
+  answersIndex: number[];
   showAnswer: boolean;
-  onCheckAnswer: (isCorrect: boolean) => void;
+  selectedChoicesIndex?: number[];
+  onAnswerSelect: (choices: number[]) => void;
 };
 
 export function ChoiceList({
   choices,
-  correctAnswerIndices = [],
+  selectedChoicesIndex = [],
+  answersIndex = [],
   showAnswer,
-  onCheckAnswer,
+  onAnswerSelect,
 }: ChoiceListProps) {
-  const [selectedChoices, setSelectedChoices] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (!showAnswer) {
-      return;
-    }
-
-    onCheckAnswer(
-      arraysEqual(selectedChoices.sort(), correctAnswerIndices.sort())
-    );
-  }, [showAnswer, selectedChoices, correctAnswerIndices, onCheckAnswer]);
-
   const toggleChoice = (index: number) => {
     if (showAnswer) {
       return;
     }
-    setSelectedChoices((prev: number[]): number[] => {
-      return prev.includes(index)
-        ? prev.filter((i) => i !== index)
-        : [...prev, index];
-    });
+
+    const newSelectedChoices = selectedChoicesIndex.includes(index)
+      ? selectedChoicesIndex.filter((i) => i !== index)
+      : [...selectedChoicesIndex, index];
+
+    onAnswerSelect(newSelectedChoices);
   };
 
   const isChoiceEqualsAnswer = (index: number) => {
-    return showAnswer && correctAnswerIndices.includes(index);
-  };
-
-  const arraysEqual = (a: number[], b: number[]) => {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
+    return showAnswer && answersIndex.includes(index);
   };
 
   return (
@@ -54,7 +35,7 @@ export function ChoiceList({
         <li
           key={index}
           className={`mb-2 cursor-pointer ${
-            selectedChoices.includes(index) ? "font-bold" : ""
+            selectedChoicesIndex.includes(index) ? "font-bold" : ""
           } 
           ${isChoiceEqualsAnswer(index) ? "border-2 border-sky-500" : ""}`}
           onClick={() => toggleChoice(index)}
