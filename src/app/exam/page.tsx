@@ -139,7 +139,6 @@ export default function ExamPage() {
           <ResultModal
             correctAnswers={correctAnswers}
             selectedAnswers={selectedAnswers}
-            onClose={() => setShowModal(false)}
           />
         )}
       </div>
