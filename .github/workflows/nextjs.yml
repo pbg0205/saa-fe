@@ -81,6 +81,10 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::333063216678:role/cooper-sst
           aws-region: us-east-1
+      - name: app install
+        run: |
+          npm install -g npm-check-updates && ncu -u && npm install
+
       - name: Deploy app
         run: |
-          npm i && npx sst deploy --stage prod
+          npx sst deploy --stage prod
