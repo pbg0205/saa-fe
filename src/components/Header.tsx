@@ -1,18 +1,68 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import "../app/globals.css";
 
 export default function Header() {
+  const pathname = usePathname();
+
+  const isActive = (path: string) => {
+    if (pathname === path) return true;
+
+    // /problems/ko나 /problems/en의 경우 하위 경로도 active로 처리
+    if (path === "/problems/ko" && pathname?.startsWith("/problems/ko")) return true;
+    if (path === "/problems/en" && pathname?.startsWith("/problems/en")) return true;
+
+    return false;
+  };
+
   return (
-    <header className="flex justify-between items-center p-4">
-      <h1 className="text-3xl font-bold">
+    <header className="sticky top-0 z-[100] flex justify-between items-center min-h-[60px] h-[60px] px-4 bg-white border-b border-gray-200 shadow-sm md:px-8">
+      <h1 className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors md:text-3xl">
         <Link href="/">SAA</Link>
       </h1>
-      <nav className="flex gap-4">
-        <Link href="/problems/ko">KO</Link>
-        <Link href="/problems/en">EN</Link>
-        <Link href="/problems/answers">answers</Link>
-        <Link href="/problems/random-number">random</Link>
-        <Link href="/exam">exam</Link>
+      <nav className="flex gap-3 items-center md:gap-6">
+        <Link
+          href="/problems/ko"
+          className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
+            isActive("/problems/ko") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          KO
+        </Link>
+        <Link
+          href="/problems/en"
+          className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
+            isActive("/problems/en") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          EN
+        </Link>
+        <Link
+          href="/problems/answers"
+          className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
+            isActive("/problems/answers") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          answers
+        </Link>
+        <Link
+          href="/problems/random-number"
+          className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
+            isActive("/problems/random-number") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          random
+        </Link>
+        <Link
+          href="/exam"
+          className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
+            isActive("/exam") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          exam
+        </Link>
       </nav>
     </header>
   );
