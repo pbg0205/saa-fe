@@ -2,8 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Inflearn Design System - CSS Variables */
+:root {
+  /* Primary Colors */
+  --color-primary: #00C471;
+  --color-primary-dark: #00A760;
+  --color-primary-light: #E5F9F1;
+
+  /* Gray Scale */
+  --gray-50: #F8F9FA;
+  --gray-100: #f1f3f5;
+  --gray-200: #dee2e6;
+  --gray-300: #adb5bd;
+  --gray-400: #868e96;
+  --gray-500: #495057;
+  --gray-900: #212529;
+
+  /* Semantic Colors */
+  --color-alert: #fa5252;
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* Spacing */
+  --spacing-xs: 0.625rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 1.5rem;
+
+  /* Border Radius */
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 2rem;
+  --radius-pill: 62.4375rem;
+
+  /* Shadows */
+  --shadow-sm: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.04);
+}
+
 html,
 body {
   height: 100vh;
   overflow-y: auto;
+  color: var(--gray-900);
+}
+
+/* Inflearn-inspired Button Styles */
+@layer components {
+  .btn-primary {
+    @apply bg-[#00C471] text-white font-bold px-6 py-3 rounded-full transition-colors duration-200;
+    height: 2.625rem;
+  }
+
+  .btn-primary:hover {
+    @apply bg-[#00A760];
+  }
+
+  .btn-secondary {
+    @apply bg-gray-50 text-gray-500 font-bold px-6 py-3 rounded-full transition-colors duration-200;
+    height: 2.625rem;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-gray-100;
+  }
+
+  .card {
+    @apply bg-white rounded-lg p-6 shadow-sm transition-shadow duration-200;
+  }
+
+  .card:hover {
+    @apply shadow-md;
+  }
 }
