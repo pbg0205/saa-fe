@@ -28,7 +28,7 @@ export default function ExamPage() {
       try {
         const problems = await fetchRandomProblems();
         setRandomProblems(problems);
-        setProblemData(problems[currentProblemIdx]);
+        setProblemData(problems[0]);
 
         const answers = getCorrectAnswers(problems);
         console.log("정답 설정:", answers);
@@ -43,9 +43,11 @@ export default function ExamPage() {
   }, []);
 
   useEffect(() => {
-    setProblemData(randomProblems[currentProblemIdx]);
-    console.log("change problem selectedAnswers: ", selectedAnswers);
-  }, [currentProblemIdx]);
+    if (randomProblems.length > 0) {
+      setProblemData(randomProblems[currentProblemIdx]);
+      console.log("change problem selectedAnswers: ", selectedAnswers);
+    }
+  }, [currentProblemIdx, randomProblems, selectedAnswers]);
 
   if (isLoading) {
     return <div>로딩 중...</div>;
@@ -90,7 +92,7 @@ export default function ExamPage() {
     <>
       <section className="flex justify-between items-center p-4 w-full">
         <div className="flex-1">
-          <Timer timeInSeconds={600} onTimeEnd={() => setShowModal(true)} />
+          <Timer onTimeEnd={() => setShowModal(true)} />
         </div>
         <div className="flex gap-4">
           <ExamProblemPrevButton
