@@ -8,7 +8,7 @@ type ProblemListProps = {
 };
 
 export default async function ProblemListPage({ params }: ProblemListProps) {
-  const language = params.language;
+  const { language } = params;
   const problems = await getAllProblems(language);
   return (
     <>

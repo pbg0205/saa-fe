@@ -20,14 +20,22 @@ type ProblemDetailPageProps = {
 };
 
 export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
-  const { language, problemNumber } = params;
   const [problemData, setProblemData] = useState<ProblemData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
   const [answersIndex, setCorrectAnswerIndices] = useState<number[]>([]);
   const [choicesIndex, setSelectedChoicesIndex] = useState<number[]>([]);
+  const [language, setLanguage] = useState<string>("");
+  const [problemNumber, setProblemNumber] = useState<string>("");
 
   useEffect(() => {
+    setLanguage(params.language);
+    setProblemNumber(params.problemNumber);
+  }, [params]);
+
+  useEffect(() => {
+    if (!language || !problemNumber) return;
+
     const fetchProblemData = async () => {
       try {
         const response = await fetch(
