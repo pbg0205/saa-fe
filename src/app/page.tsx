@@ -198,7 +198,7 @@ export default function Home() {
 
           {/* Answer Mode */}
           <div className="mt-8">
-            <Link href="problems/answer" className="group block">
+            <Link href="problems/answers" className="group block">
               <div className="card hover:border-2 hover:border-[#00C471] transition-all duration-200">
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 bg-[#E5F9F1] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C471] transition-colors">
