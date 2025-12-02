@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LanguageSelector from "@/components/LanguageSelector";
 import "../app/globals.css";
 
 export default function Header() {
@@ -63,6 +64,7 @@ export default function Header() {
         >
           exam
         </Link>
+        <LanguageSelector />
       </nav>
     </header>
   );
