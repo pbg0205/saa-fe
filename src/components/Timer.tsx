@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 interface TimerProps {
-  timeInSeconds: number;
   onTimeEnd?: () => void;
 }
 
-const Timer = ({ timeInSeconds, onTimeEnd }: TimerProps) => {
-  const [timeRemainingInSeconds, setTimeRemaining] = useState(timeInSeconds);
+const Timer = ({ onTimeEnd }: TimerProps) => {
+  const randomProblemInitialSeconds = 600;
+  const [timeRemainingInSeconds, setTimeRemaining] = useState(randomProblemInitialSeconds);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,7 +18,7 @@ const Timer = ({ timeInSeconds, onTimeEnd }: TimerProps) => {
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [timeRemainingInSeconds]);
+  }, [timeRemainingInSeconds, onTimeEnd]);
 
   const minutes = Math.floor(timeRemainingInSeconds / 60);
   const seconds = timeRemainingInSeconds % 60;
