@@ -1,0 +1,9 @@
+{
+  "buildCommand": "bash scripts/init-submodules.sh && npm run build",
+  "installCommand": "npm install",
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

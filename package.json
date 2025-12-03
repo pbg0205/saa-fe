@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "bash scripts/init-submodules.sh",
     "vercel-install": "./vercel-submodule-config.sh && yarn --ignore-scripts"
   },
   "dependencies": {
