@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { getLocalizedText } from "@/utils/Localizations";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type ButtonProps = {
-  language: string;
   problemNumber?: number | null;
 };
 
@@ -15,14 +15,16 @@ const buttonBaseStyle = `
   focus:outline-none focus:ring-2 focus:ring-offset-2
 `;
 
-export function ProblemPrevButton({ language, problemNumber }: ButtonProps) {
+export function ProblemPrevButton({ problemNumber }: ButtonProps) {
   const router = useRouter();
+  const { language } = useLanguage();
+
   if (problemNumber == null) {
     return null;
   }
 
   const handleClick = () => {
-    router.push(`/problems/${language}/${problemNumber}`);
+    router.push(`/problems/${problemNumber}`);
   };
 
   return (
@@ -37,14 +39,16 @@ export function ProblemPrevButton({ language, problemNumber }: ButtonProps) {
   );
 }
 
-export function ProblemNextButton({ language, problemNumber }: ButtonProps) {
+export function ProblemNextButton({ problemNumber }: ButtonProps) {
   const router = useRouter();
+  const { language } = useLanguage();
+
   if (problemNumber == null) {
     return null;
   }
 
   const handleClick = () => {
-    router.push(`/problems/${language}/${problemNumber}`);
+    router.push(`/problems/${problemNumber}`);
   };
 
   return (

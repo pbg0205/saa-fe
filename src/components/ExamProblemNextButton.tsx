@@ -1,10 +1,10 @@
 "use client";
 
 import { getLocalizedText } from "@/utils/Localizations";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { FaChevronRight } from "react-icons/fa";
 
 type ExamProblemNextProps = {
-  language: string;
   onNextProblem: () => void;
   disableNextButton: boolean;
 };
@@ -16,10 +16,11 @@ const buttonBaseStyle = `
 `;
 
 export default function ExamProblemNextButton({
-  language,
   onNextProblem: onProblemNext,
   disableNextButton: disableNextButton,
 }: ExamProblemNextProps) {
+  const { language } = useLanguage();
+
   return (
     <button
       className={`${buttonBaseStyle} bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500`}

@@ -4,12 +4,14 @@ import Timer from "@/components/Timer";
 import ExamProblemPrevButton from "@/components/ExamProblemPrevButton";
 import ExamProblemNextButton from "@/components/ExamProblemNextButton";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Problem } from "@/service/problems";
 import { ChoiceList } from "@/components/ChoiceList";
 import ExamSubmitButton from "@/components/ExamSubmitButton";
 import ResultModal from "@/components/ResultModal";
 
 export default function ExamPage() {
+  const { language } = useLanguage();
   const [currentProblemIdx, setCurrentProblemIdx] = useState<number>(0);
   const [problemData, setProblemData] = useState<Problem>();
   const [randomProblems, setRandomProblems] = useState<Problem[]>([]);
@@ -26,7 +28,7 @@ export default function ExamPage() {
     const initializeProblems = async () => {
       setIsLoading(true);
       try {
-        const problems = await fetchRandomProblems();
+        const problems = await fetchRandomProblems(language);
         setRandomProblems(problems);
         setProblemData(problems[0]);
 
@@ -40,7 +42,7 @@ export default function ExamPage() {
       }
     };
     initializeProblems();
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     if (randomProblems.length > 0) {
@@ -96,12 +98,10 @@ export default function ExamPage() {
         </div>
         <div className="flex gap-4">
           <ExamProblemPrevButton
-            language="ko"
             onPrevProblem={onClickPrevProblem}
             disablePrevButton={disablePrevButton}
           ></ExamProblemPrevButton>
           <ExamProblemNextButton
-            language="ko"
             onNextProblem={onClickNextProblem}
             disableNextButton={disableNextButton}
           ></ExamProblemNextButton>
@@ -148,9 +148,9 @@ export default function ExamPage() {
   );
 }
 
-async function fetchRandomProblems(): Promise<Problem[]> {
+async function fetchRandomProblems(language: string): Promise<Problem[]> {
   try {
-    const response = await fetch(`/api/exam/random`);
+    const response = await fetch(`/api/exam/random?language=${language}`);
     const data = await response.json();
 
     if (!response.ok) {

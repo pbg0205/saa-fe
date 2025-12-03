@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Problem } from "@/service/problems";
+import Link from "next/link";
 
-export default function ProblemAnswerPage() {
+export default function ProblemListPage() {
   const { language } = useLanguage();
   const [problems, setProblems] = useState<Problem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,10 +34,15 @@ export default function ProblemAnswerPage() {
 
   return (
     <>
-      <h1>문제 정답 페이지</h1>
+      <h1>문제 목록 페이지({language})</h1>
       {problems.map((problem: Problem) => (
         <div key={problem.testNumber}>
-          Question{problem.testNumber}. {problem.answer}
+          <Link
+            key={problem.testNumber}
+            href={`/problems/${problem.testNumber}`}
+          >
+            Question. {problem.testNumber}
+          </Link>
         </div>
       ))}
     </>

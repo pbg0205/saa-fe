@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   ProblemNextButton,
   ProblemPrevButton,
@@ -14,22 +15,20 @@ import { answerIndices } from "@/service/answer";
 
 type ProblemDetailPageProps = {
   params: {
-    language: string;
     problemNumber: string;
   };
 };
 
 export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
+  const { language } = useLanguage();
   const [problemData, setProblemData] = useState<ProblemData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
   const [answersIndex, setCorrectAnswerIndices] = useState<number[]>([]);
   const [choicesIndex, setSelectedChoicesIndex] = useState<number[]>([]);
-  const [language, setLanguage] = useState<string>("");
   const [problemNumber, setProblemNumber] = useState<string>("");
 
   useEffect(() => {
-    setLanguage(params.language);
     setProblemNumber(params.problemNumber);
   }, [params]);
 
@@ -39,7 +38,7 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
     const fetchProblemData = async () => {
       try {
         const response = await fetch(
-          `/api/problems/${language}/${problemNumber}`
+          `/api/problems/${problemNumber}?language=${language}`
         );
         const data = await response.json();
 
@@ -89,13 +88,11 @@ export default function ProblemDetailPage({ params }: ProblemDetailPageProps) {
       <section className="flex justify-between items-center p-4 w-full">
         <div className="flex-1">
           <ProblemPrevButton
-            language={language}
             problemNumber={prev?.testNumber}
           />
         </div>
         <div className="flex-1 flex justify-end">
           <ProblemNextButton
-            language={language}
             problemNumber={next?.testNumber}
           />
         </div>

@@ -5,6 +5,7 @@ import { ChoiceList } from "@/components/ChoiceList";
 import { ProblemContent } from "@/components/ProblemContent";
 import { answerIndices } from "@/service/answer";
 import { getLocalizedText } from "@/utils/Localizations";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useState, useEffect, useCallback } from "react";
 import { RandomProblemNextButton } from "../../../../components/RandomProblemNextButton";
 export type RandomProblem = {
@@ -15,7 +16,7 @@ export type RandomProblem = {
 };
 
 export default function ProblemDetailPage() {
-  const language = "ko";
+  const { language } = useLanguage();
 
   const [randomProblem, setRandomProblem] = useState<RandomProblem | null>(
     null
@@ -32,7 +33,7 @@ export default function ProblemDetailPage() {
     const randomNumber = Math.floor(Math.random() * problemSize);
 
     try {
-      const response = await fetch(`/api/problems/${language}/${randomNumber}`);
+      const response = await fetch(`/api/problems/${randomNumber}?language=${language}`);
       const data = await response.json();
 
       if (response.ok) {

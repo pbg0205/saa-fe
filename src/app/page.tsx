@@ -119,35 +119,19 @@ export default function Home() {
             학습 모드
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* KO Mode */}
-            <Link href="/problems/ko" className="group">
+            {/* Problems Mode */}
+            <Link href="/problems" className="group">
               <div className="card h-full hover:border-2 hover:border-[#00C471] transition-all duration-200">
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 bg-[#E5F9F1] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C471] transition-colors">
-                    <span className="text-2xl font-bold text-[#00C471] group-hover:text-white">KO</span>
+                    <svg className="w-8 h-8 text-[#00C471] group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">한국어 문제</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">문제 목록</h3>
                     <p className="text-gray-600 mb-4">
-                      한국어 버전의 문제를 풀이해 볼 수 있습니다. 지문을 클릭하고 정답을 선택하면 즉시 정답 여부를 확인할 수 있습니다.
-                    </p>
-                    <span className="text-[#00C471] font-bold group-hover:underline">시작하기 →</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            {/* EN Mode */}
-            <Link href="problems/en" className="group">
-              <div className="card h-full hover:border-2 hover:border-[#00C471] transition-all duration-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 bg-[#E5F9F1] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C471] transition-colors">
-                    <span className="text-2xl font-bold text-[#00C471] group-hover:text-white">EN</span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">영어 문제</h3>
-                    <p className="text-gray-600 mb-4">
-                      영어 버전의 문제를 풀이해 볼 수 있습니다. 지문을 클릭하고 정답을 선택하면 즉시 정답 여부를 확인할 수 있습니다.
+                      한국어와 영어로 제공되는 모든 문제를 풀이해 볼 수 있습니다. 헤더에서 언어를 선택하고 지문을 클릭하여 정답을 확인하세요.
                     </p>
                     <span className="text-[#00C471] font-bold group-hover:underline">시작하기 →</span>
                   </div>
@@ -156,7 +140,7 @@ export default function Home() {
             </Link>
 
             {/* Random Mode */}
-            <Link href="problems/random-number" className="group">
+            <Link href="/problems/random-number" className="group">
               <div className="card h-full hover:border-2 hover:border-[#00C471] transition-all duration-200">
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 bg-[#E5F9F1] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C471] transition-colors">
@@ -194,12 +178,10 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-          </div>
 
-          {/* Answer Mode */}
-          <div className="mt-8">
-            <Link href="problems/answers" className="group block">
-              <div className="card hover:border-2 hover:border-[#00C471] transition-all duration-200">
+            {/* Answer Mode */}
+            <Link href="/problems/answers" className="group">
+              <div className="card h-full hover:border-2 hover:border-[#00C471] transition-all duration-200">
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 bg-[#E5F9F1] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C471] transition-colors">
                     <svg className="w-8 h-8 text-[#00C471] group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,7 +211,7 @@ export default function Home() {
           <p className="text-lg md:text-xl text-white/90 mb-8">
             체계적인 학습으로 SSA 시험을 완벽하게 준비할 수 있습니다.
           </p>
-          <Link href="/ko" className="inline-flex items-center bg-white text-[#00C471] font-bold px-8 py-4 rounded-full hover:bg-gray-50 transition-colors duration-200">
+          <Link href="/problems" className="inline-flex items-center bg-white text-[#00C471] font-bold px-8 py-4 rounded-full hover:bg-gray-50 transition-colors duration-200">
             무료로 시작하기
           </Link>
         </div>

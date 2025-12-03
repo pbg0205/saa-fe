@@ -11,9 +11,8 @@ export default function Header() {
   const isActive = (path: string) => {
     if (pathname === path) return true;
 
-    // /problems/ko나 /problems/en의 경우 하위 경로도 active로 처리
-    if (path === "/problems/ko" && pathname?.startsWith("/problems/ko")) return true;
-    if (path === "/problems/en" && pathname?.startsWith("/problems/en")) return true;
+    // /problems의 경우 하위 경로도 active로 처리
+    if (path === "/problems" && pathname?.startsWith("/problems")) return true;
 
     return false;
   };
@@ -25,20 +24,12 @@ export default function Header() {
       </h1>
       <nav className="flex gap-3 items-center md:gap-6">
         <Link
-          href="/problems/ko"
+          href="/problems"
           className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
-            isActive("/problems/ko") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
+            isActive("/problems") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
           }`}
         >
-          KO
-        </Link>
-        <Link
-          href="/problems/en"
-          className={`font-bold text-xs md:text-base whitespace-nowrap transition-colors pb-0.5 ${
-            isActive("/problems/en") ? "text-gray-900 border-b-2 border-gray-900" : "text-gray-500 hover:text-gray-900"
-          }`}
-        >
-          EN
+          problems
         </Link>
         <Link
           href="/problems/answers"
